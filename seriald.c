@@ -269,6 +269,7 @@ static void loop(void)
 				n = write(fd_tty, tty_q.buff, write_sz);
 			} while (n < 0 && errno == EINTR);
 			if (n <= 0) fatal("write to term failed: %s", strerror(errno));
+			fprintf(stderr, "seriald writing: [%.*s]", n, tty_q.buff);
 			memmove(tty_q.buff, tty_q.buff + n, tty_q.len - n);
 			tty_q.len -= n;
 			pthread_mutex_unlock(&tty_q_mutex);
